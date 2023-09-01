@@ -8,54 +8,70 @@
 #include "insertionSort.c"
 #include "mergeSort.c"
 #include "quickSort.c"
-#include "countingSort.c "
+#include "countingSort.c"
 
+/*
 
-//A saída deste experimento consiste de uma primeira linha contendo o rótulo [[REVERSE]],
-//Ordena o vetor de Tamanho vTam em Ordem Decrescente
-void ordenarDecrescente(int vetor[], int vTam) {
-    for (int i = 0; i < vTam - 1; i++) {
-        for (int j = 0; j < vTam - i - 1; j++) {
-            if (vetor[j] < vetor[j + 1]) {
-                // Troca os elementos de posição
-                int temp = vetor[j];
-                vetor[j] = vetor[j + 1];
-                vetor[j + 1] = temp;
-            }
-        }
-    }
+ SELECTIONSORT x
+ INSERTIONSORT x
+ MERGESORT x
+ HEAPSORT --
+ QUICKSORT x
+ e
+ COUNTINGSORT x
+
+*/
+
+void copiaVetor(int* vetDest, int* vetOrig, int n){
+  for(int i = 0; i < n; i++){
+    vetDest[i] = vetOrig[i];
+  }
 }
 
-//A saída deste experimento consiste de uma primeira linha contendo um rótulo [[SORTED]]
-//Ordena o vetor de Tamanho vTam em Ordem Crescente
-void ordenarCrescente(int vetor[], int vTam) {
-    for (int i = 0; i < vTam - 1; i++) {
-        for (int j = 0; j < vTam - i - 1; j++) {
-            if (vetor[j] > vetor[j + 1]) {
-                // Troca os elementos de posição
-                int temp = vetor[j];
-                vetor[j] = vetor[j + 1];
-                vetor[j + 1] = temp;
-            }
-        }
-    }
+int* vetorAscendente(int n){
+  int* vRetorno = (int*)malloc(sizeof(int) * n);
+
+  for(int i = 0; i < n; i++){
+    vRetorno[i] = i;
+  }
+
+  return vRetorno;
 }
 
-//A saída deste experimento consiste de uma primeira linha contendo o rótulo [[NEARLY SORTED]]
-// Quase ordena o vetor inteiro (Aproximadamente 90% do tamanho do vetor é ordenado...)
-void quase_ordenar(int vetor[], int tamanho) {
-    int fim_desordenado = tamanho * 0.10; 
-    // Ordena a parte inicial do vetor (90% ordenado)
-    for (int i = 0; i < fim_desordenado; i++) {
-        for (int j = 0; j < fim_desordenado - i - 1; j++) {
-            if (vetor[j] > vetor[j + 1]) {
-                // Troca os elementos de posição
-                int temp = vetor[j];
-                vetor[j] = vetor[j + 1];
-                vetor[j + 1] = temp;
-            }
-        }
-    }
+int* vetorAleatorio(int n){
+  int* vRetorno = (int*)malloc(sizeof(int) * n);
+  //srand(time(NULL));
+
+  for(int i = 0; i < n; i++){
+    vRetorno[i] = rand() % 20000;
+  }
+
+  return vRetorno;
+}
+
+int* vetorQuaseOrdenado(int n){
+  int* vRetorno = (int*)malloc(sizeof(int) * n);
+  int nOrd = (n * 0.9);
+
+  for(int i = 0; i < nOrd; i++){
+    vRetorno[i] = i;
+  }
+
+  for(int i = nOrd; i < n; i++){
+    vRetorno[i] = rand() % 20000;
+  }
+
+  return vRetorno;
+}
+
+int* vetorDescendente(int n){
+  int* vRetorno = (int*)malloc(sizeof(int) * n);
+
+  for(int i = 0; i < n; i++){
+    vRetorno[i] = n-i;
+  }
+
+  return vRetorno;
 }
 
 int main() {
@@ -65,53 +81,74 @@ int main() {
   scanf("%d %d %d", &inc, &fim, &stp);
   scanf("%d", &rpt);
 
-  double SelectionA, InsertionA, MergeA, QuickA, CoutingA;
-  double SelectionD, InsertionD, MergeD, QuickD, CoutingD;
-  double SelectionO, InsertionO, MergeO, QuickO, CoutingO;
-  double SelectionQ, InsertionQ, MergeQ, QuickQ, CoutingQ;
+  double SelectionA, InsertionA, MergeA, QuickA, CoutingA; // aleatório
+  double SelectionD, InsertionD, MergeD, QuickD, CoutingD; // decrescente
+  double SelectionO, InsertionO, MergeO, QuickO, CoutingO; // ordenado
+  double SelectionQ, InsertionQ, MergeQ, QuickQ, CoutingQ; // quase ordenado
 
   printf("[[RANDOM]]\n");
   printf("n  Selection  Insertion  Merge  Quick  Couting\n");
 
-  for (int i = inc; i <= fim; i += stp) {
-    double totalSelection = 0, totalInsertion = 0, totalMerge = 0, totalQuick = 0, totalCouting = 0;
-      
-    for (int j = 0; j < rpt; j++) {
-      int * vetor = malloc(sizeof(int) * i);
-      geraVetor(vetor, i);
+  int* tempVetor;
+  int* vetor;
 
-      int *tempoVetor = malloc(sizeof(int) * i); 
-      memcpy(tempoVetor, vetor, sizeof(int) * i); 
+  for (int i = inc; i <= fim; i += stp) { // aleatorio
+    double totalSelection = 0, totalInsertion = 0, totalMerge = 0, totalQuick = 0, totalCouting = 0;
+    vetor = vetorAleatorio(i);
+    tempVetor = malloc(sizeof(int) * i);
+    
+
+    for (int j = 0; j < rpt; j++) {
+      printf("chegou na 100\n");
+      
+      //free(tempVetor);
+      printf("104\n");
+      printf("106\n");
+      copiaVetor(tempVetor, vetor, i);
+      printf("108\n");
 
       clock_t hrInicio, hrFinal;
 
+      printf("antes do selection\n");
       hrInicio = clock();
-      selectionSort(tempoVetor, i);
+      selectionSort(tempVetor, i);
       hrFinal = clock();
       totalSelection += ((double)(hrFinal - hrInicio)) / CLOCKS_PER_SEC;
 
+      copiaVetor(tempVetor, vetor, i);
+      
+      printf("antes do insertion\n");
       hrInicio = clock();
-      insertionSort(tempoVetor, i);
+      insertionSort(tempVetor, i);
       hrFinal = clock();
       totalInsertion += ((double)(hrFinal - hrInicio)) / CLOCKS_PER_SEC;
 
+
+      copiaVetor(tempVetor, vetor, i);
+
+      printf("antes do merge\n");
       hrInicio = clock();
-      mergeSort(tempoVetor, 0, i-1);
+      mergeSort(tempVetor, 0, i-1);
       hrFinal = clock();
       totalMerge += ((double)(hrFinal - hrInicio)) / CLOCKS_PER_SEC;
 
+      copiaVetor(tempVetor, vetor, i);
+
+      printf("antes do quick\n");
       hrInicio = clock();
-      quickSort(tempoVetor, 0, i-1);
+      quickSort(tempVetor, 1, i);
       hrFinal = clock();
       totalQuick += ((double)(hrFinal - hrInicio)) / CLOCKS_PER_SEC;
 
+      printf("linha 144\n");
+
+      copiaVetor(tempVetor, vetor, i);
+
+      printf("antes do counting\n");
       hrInicio = clock();
-      countingSort(tempoVetor, i-1);
+      countingSort(tempVetor, i-1);
       hrFinal = clock();
       totalCouting += ((double)(hrFinal - hrInicio)) / CLOCKS_PER_SEC;
-
-      free(tempoVetor);
-      free(vetor); 
 
     }
 
@@ -122,50 +159,62 @@ int main() {
     CoutingA = totalCouting / rpt;
 
     printf("%d %.6f %.6f %.6f %.6f %.6f\n", i, SelectionA, InsertionA, MergeA, QuickA, CoutingA);
+    free(vetor);
+    free(tempVetor);
   }
 
 printf("[[REVERSE]]\n");
 printf("n  Selection  Insertion  Merge  Quick  Couting\n");
 
-  for(int i = inc; i <= fim; i += stp) {
+  for(int i = inc; i <= fim; i += stp) { // reverso
     double totalSelection = 0, totalInsertion = 0, totalMerge = 0, totalQuick = 0, totalCouting = 0;
 
     for (int j = 0; j < rpt; j++) {
-      int * vetor = malloc(sizeof(int) * i);
-      geraVetor(vetor, i);
-      ordenarDecrescente(vetor, i);
+      vetor = vetorDescendente(i);
 
-      int *tempoVetor = malloc(sizeof(int) * i); 
-      memcpy(tempoVetor, vetor, sizeof(int) * i);
+
+      copiaVetor(tempVetor, vetor, i);
 
       clock_t hrInicio, hrFinal;
 
       hrInicio = clock();
-      selectionSort(tempoVetor, i);
+      selectionSort(tempVetor, i);
       hrFinal = clock();
       totalSelection += ((double)(hrFinal - hrInicio)) / CLOCKS_PER_SEC;
+
+
+      copiaVetor(tempVetor, vetor, i);
 
       hrInicio = clock();
       insertionSort(vetor, i);
       hrFinal = clock();
       totalInsertion += ((double)(hrFinal - hrInicio)) / CLOCKS_PER_SEC;
 
+
+      copiaVetor(tempVetor, vetor, i);
+
       hrInicio = clock();
-      mergeSort(tempoVetor, 0, i-1);
+      mergeSort(tempVetor, 0, i-1);
       hrFinal = clock();
       totalMerge += ((double)(hrFinal - hrInicio)) / CLOCKS_PER_SEC;
 
+
+      copiaVetor(tempVetor, vetor, i);
+
       hrInicio = clock();
-      quickSort(tempoVetor, 0, i-1);
+      quickSort(tempVetor, 1, i);
       hrFinal = clock();
       totalQuick += ((double)(hrFinal - hrInicio)) / CLOCKS_PER_SEC;
 
+
+      copiaVetor(tempVetor, vetor, i);
+
       hrInicio = clock();
-      countingSort(tempoVetor, i-1);
+      countingSort(tempVetor, i-1);
       hrFinal = clock();
       totalCouting += ((double)(hrFinal - hrInicio)) / CLOCKS_PER_SEC;
 
-      free(tempoVetor);
+
       free(vetor); 
     }
 
@@ -181,23 +230,24 @@ printf("n  Selection  Insertion  Merge  Quick  Couting\n");
 printf("[[SORTED]]\n");
 printf("n  Selection  Insertion  Merge  Quick  Couting\n");
 
-  for(int i = inc; i <= fim; i += stp) {
+  for(int i = inc; i <= fim; i += stp) { // ordenado
     double totalSelection = 0, totalInsertion = 0, totalMerge = 0, totalQuick = 0, totalCouting = 0;
 
     for (int j = 0; j < rpt; j++) {
-      int * vetor = malloc(sizeof(int) * i);
-      geraVetor(vetor, i);
-      ordenarCrescente(vetor, i);
+      vetor = vetorAscendente(i);
 
-      int *tempoVetor = malloc(sizeof(int) * i); 
-      memcpy(tempoVetor, vetor, sizeof(int) * i);
+
+      copiaVetor(tempVetor, vetor, i);
 
       clock_t hrInicio, hrFinal;
 
       hrInicio = clock();
-      selectionSort(tempoVetor, i);
+      selectionSort(tempVetor, i);
       hrFinal = clock();
       totalSelection += ((double)(hrFinal - hrInicio)) / CLOCKS_PER_SEC;
+
+
+      copiaVetor(tempVetor, vetor, i);
 
       hrInicio = clock();
       insertionSort(vetor, i);
@@ -205,21 +255,30 @@ printf("n  Selection  Insertion  Merge  Quick  Couting\n");
       totalInsertion += ((double)(hrFinal - hrInicio)) / CLOCKS_PER_SEC;
 
       hrInicio = clock();
-      mergeSort(tempoVetor, 0, i-1);
+      mergeSort(tempVetor, 0, i-1);
       hrFinal = clock();
       totalMerge += ((double)(hrFinal - hrInicio)) / CLOCKS_PER_SEC;
 
+
+      copiaVetor(tempVetor, vetor, i);
+
       hrInicio = clock();
-      quickSort(tempoVetor, 0, i-1);
+      quickSort(tempVetor, 1, i);
       hrFinal = clock();
       totalQuick += ((double)(hrFinal - hrInicio)) / CLOCKS_PER_SEC;
 
+
+      copiaVetor(tempVetor, vetor, i);
+
       hrInicio = clock();
-      countingSort(tempoVetor, i-1);
+      countingSort(tempVetor, i-1);
       hrFinal = clock();
       totalCouting += ((double)(hrFinal - hrInicio)) / CLOCKS_PER_SEC;
 
-      free(tempoVetor);
+
+      copiaVetor(tempVetor, vetor, i);
+
+
       free(vetor); 
     }
 
@@ -235,23 +294,30 @@ printf("n  Selection  Insertion  Merge  Quick  Couting\n");
 printf("[[NEARLY SORTED]]\n");
 printf("n  Selection  Insertion  Merge  Quick  Couting\n");
 
-for(int i = inc; i <= fim; i += stp) {
+for(int i = inc; i <= fim; i += stp) { // quase ordenado
     double totalSelection = 0, totalInsertion = 0, totalMerge = 0, totalQuick = 0, totalCouting = 0;
 
     for (int j = 0; j < rpt; j++) {
-        int * vetor = malloc(sizeof(int) * i);
-        geraVetor(vetor, i);
-        quase_ordenar(vetor, i);
+        vetor = vetorQuaseOrdenado(i);
 
-        int *tempoVetor = malloc(sizeof(int) * i); 
-        memcpy(tempoVetor, vetor, sizeof(int) * i);
+
+
+        copiaVetor(tempVetor, vetor, i);
 
         clock_t hrInicio, hrFinal;
 
+
+
+        copiaVetor(tempVetor, vetor, i);
+
         hrInicio = clock();
-        selectionSort(tempoVetor, i);
+        selectionSort(tempVetor, i);
         hrFinal = clock();
         totalSelection += ((double)(hrFinal - hrInicio)) / CLOCKS_PER_SEC;
+
+
+
+        copiaVetor(tempVetor, vetor, i);
 
         hrInicio = clock();
         insertionSort(vetor, i);
@@ -259,21 +325,34 @@ for(int i = inc; i <= fim; i += stp) {
         totalInsertion += ((double)(hrFinal - hrInicio)) / CLOCKS_PER_SEC;
 
         hrInicio = clock();
-        mergeSort(tempoVetor, 0, i-1);
+        mergeSort(tempVetor, 0, i-1);
         hrFinal = clock();
         totalMerge += ((double)(hrFinal - hrInicio)) / CLOCKS_PER_SEC;
 
+
+
+        copiaVetor(tempVetor, vetor, i);
+
         hrInicio = clock();
-        quickSort(tempoVetor, 0, i-1);
+        quickSort(tempVetor, 1, i);
         hrFinal = clock();
         totalQuick += ((double)(hrFinal - hrInicio)) / CLOCKS_PER_SEC;
 
+
+
+        copiaVetor(tempVetor, vetor, i);
+
         hrInicio = clock();
-        countingSort(tempoVetor, i-1);
+        countingSort(tempVetor, i-1);
         hrFinal = clock();
         totalCouting += ((double)(hrFinal - hrInicio)) / CLOCKS_PER_SEC;
 
-        free(tempoVetor);
+
+
+        copiaVetor(tempVetor, vetor, i);
+
+
+
         free(vetor); 
     }
 
