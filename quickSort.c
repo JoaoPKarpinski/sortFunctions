@@ -1,12 +1,12 @@
 #include <stdio.h>
 #include <stdlib.h>
 
+//implementando o quick sort
 int particiona(int *vetor, int p, int r) {
     int pivo = vetor[r];
-    int i = p - 1;
-    int temp;
+    int i = p - 1, j, temp;
     
-    for (int j = p; j <= r - 1; j++) {
+    for (j = p; j < r; j++) {
         if (vetor[j] <= pivo) {
             i++;
             temp = vetor[i];
