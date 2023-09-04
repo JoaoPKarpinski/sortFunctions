@@ -83,7 +83,7 @@ int main() {
   double SelectionQ, InsertionQ, MergeQ, HeapQ, QuickQ, CoutingQ;
 
   printf("[[RANDOM]]\n");
-  printf("  n  Selection  Insertion   Merge     Heap      Quick    Couting\n");
+  printf("n \tSelection \tInsertion  \tMerge \tHeap \tQuick \tCouting\n");
   printf("-----------------------------------------------------------------\n");
 
   for (int i = inc; i <= fim; i += stp) {
@@ -144,11 +144,11 @@ int main() {
     QuickA = totalQuick / rpt;
     CoutingA = totalCouting/rpt;
 
-    printf("%d  %.6f  %.6f  %.6f  %.6f  %.6f  %.6f\n", i, SelectionA, InsertionA, MergeA, HeapA, QuickA, CoutingA);
+    printf("%d \t%.6f \t%.6f \t%.6f \t%.6f \t%.6f \t%.6f\n", i, SelectionA, InsertionA, MergeA, HeapA, QuickA, CoutingA);
   }
 
   printf("[[REVERSE]]\n");
-  printf("  n  Selection  Insertion   Merge     Heap      Quick    Couting\n");
+  printf("n \tSelection \tInsertion  \tMerge \tHeap \tQuick \tCouting\n");
   printf("-----------------------------------------------------------------\n");
 
   for(int i = inc; i <= fim; i += stp) {
@@ -209,11 +209,11 @@ int main() {
     CoutingD = totalCouting / rpt;
     HeapD = totalHeap / rpt;
 
-    printf("%d  %.6f  %.6f  %.6f  %.6f  %.6f  %.6f\n", i, SelectionD, InsertionD, MergeD, HeapD, QuickD, CoutingD);
+    printf("%d \t%.6f \t%.6f \t%.6f \t%.6f \t%.6f \t%.6f\n", i, SelectionD, InsertionD, MergeD, HeapD, QuickD, CoutingD);
   }
 
   printf("[[SORTED]]\n");
-  printf("  n  Selection  Insertion   Merge     Heap      Quick    Couting\n");
+  printf("n \tSelection \tInsertion  \tMerge \tHeap \tQuick \tCouting\n");
   printf("-----------------------------------------------------------------\n");
 
   for(int i = inc; i <= fim; i += stp) {
@@ -274,11 +274,11 @@ int main() {
     CoutingO = totalCouting/rpt;
     HeapO = totalHeap/rpt;
 
-    printf("%d  %.6f  %.6f  %.6f  %.6f  %.6f  %.6f\n", i, SelectionO, InsertionO, MergeO, HeapO, QuickO, CoutingO);
+    printf("%d \t%.6f \t%.6f \t%.6f \t%.6f \t%.6f \t%.6f\n", i, SelectionO, InsertionO, MergeO, HeapO, QuickO, CoutingO);
   }
 
   printf("[[NEARLY SORTED]]\n");
-  printf("  n  Selection  Insertion   Merge     Heap      Quick    Couting\n");
+  printf("n \tSelection \tInsertion  \tMerge \tHeap \tQuick \tCouting\n");
   printf("-----------------------------------------------------------------\n");
 
   for(int i = inc; i <= fim; i += stp) {
@@ -339,7 +339,7 @@ int main() {
     CoutingQ = totalCouting/rpt;
     HeapQ = totalHeap/rpt;
 
-    printf("%d  %.6f  %.6f  %.6f  %.6f  %.6f  %.6f\n", i, SelectionQ, InsertionQ, MergeQ, HeapQ, QuickQ, CoutingQ);
+    printf("%d \t%.6f \t%.6f \t%.6f \t%.6f \t%.6f \t%.6f\n", i, SelectionQ, InsertionQ, MergeQ, HeapQ, QuickQ, CoutingQ);
   }
 
   return 0;
