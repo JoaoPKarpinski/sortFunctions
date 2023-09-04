@@ -2,6 +2,7 @@
 #include <stdlib.h>
 #include <limits.h>
 
+//implementando o merge sort
 void merge(int *vetor, int p, int q, int r) {
   int i, j, k;
   int n1 = q - p + 1;
@@ -9,7 +10,7 @@ void merge(int *vetor, int p, int q, int r) {
   int *left, *right;
 
   left = (int *)malloc((n1 + 1) * sizeof(int));
-  right = (int *)malloc((n1 + 1) * sizeof(int));
+  right = (int *)malloc((n2 + 1) * sizeof(int));
 
   for (i = 0; i < n1; i++) {
     left[i] = vetor[p + i];
